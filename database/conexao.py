@@ -8,7 +8,8 @@ def conectar():
         port=os.getenv("DB_PORT", "5432"),
         dbname=os.getenv("DB_NAME", "carteira_vacinacao"),
         user=os.getenv("DB_USER", "postgres"),
-        password=os.getenv("DB_PASSWORD")
+        password=os.getenv("DB_PASSWORD"),
+        sslmode=os.getenv("DB_SSLMODE", "prefer")
     )
 
     return conexao
