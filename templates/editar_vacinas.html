@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Vacina</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 40px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Editar Vacina</h1>
+
+        <form action="/vacinas/editar/{{ vacina[0] }}" method="POST">
+
+            <label>Nome da vacina:</label>
+            <input
+                type="text"
+                name="nome"
+                value="{{ vacina[1] }}"
+                required
+            >
+
+            <label>Fabricante:</label>
+            <input
+                type="text"
+                name="fabricante"
+                value="{{ vacina[2] or '' }}"
+            >
+
+            <label>Total de doses:</label>
+            <input
+                type="number"
+                name="total_doses"
+                min="1"
+                value="{{ vacina[3] }}"
+                required
+            >
+
+            <button type="submit">Salvar Alterações</button>
+
+        </form>
+
+        <br>
+
+        <a href="/vacinas">Voltar para a lista de vacinas</a>
+
+    </div>
+
+</body>
+</html>

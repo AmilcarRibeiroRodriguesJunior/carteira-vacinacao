@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Vacinas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 40px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        .mensagem {
+            color: #27ae60;
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .excluir {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Cadastro de Vacinas</h1>
+
+        {% if mensagem %}
+            <p class="mensagem">{{ mensagem }}</p>
+        {% endif %}
+
+        <form action="/vacinas/cadastrar" method="POST">
+
+            <label>Nome da vacina:</label>
+            <input type="text" name="nome" required>
+
+            <label>Fabricante:</label>
+            <input type="text" name="fabricante">
+
+            <label>Total de doses:</label>
+            <input type="number" name="total_doses" min="1" required>
+
+            <button type="submit">Cadastrar Vacina</button>
+
+        </form>
+
+        <h2>Vacinas cadastradas</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Fabricante</th>
+                    <th>Total de doses</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for vacina in vacinas %}
+
+                    <tr>
+                        <td>{{ vacina[0] }}</td>
+                        <td>{{ vacina[1] }}</td>
+                        <td>{{ vacina[2] or 'Não informado' }}</td>
+                        <td>{{ vacina[3] }}</td>
+
+                        <td>
+                            <a href="/vacinas/editar/{{ vacina[0] }}">
+                                Editar
+                            </a>
+
+                            <form
+                                action="/vacinas/excluir/{{ vacina[0] }}"
+                                method="POST"
+                                onsubmit="return confirm('Deseja realmente excluir esta vacina?');"
+                                style="display: inline;"
+                            >
+                                <button type="submit" class="excluir">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="5">
+                            Nenhuma vacina cadastrada.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <a href="/">Voltar para a página inicial</a>
+
+    </div>
+
+</body>
+</html>

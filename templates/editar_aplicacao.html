@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Aplicação</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 40px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input, select {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Editar Aplicação</h1>
+
+        <form
+            action="/aplicacoes/editar/{{ aplicacao[0] }}"
+            method="POST"
+        >
+
+            <label>Pessoa:</label>
+
+            <select name="id_pessoa" required>
+
+                {% for pessoa in pessoas %}
+
+                    <option
+                        value="{{ pessoa[0] }}"
+                        {% if pessoa[0] == aplicacao[1] %}selected{% endif %}
+                    >
+                        {{ pessoa[1] }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <label>Vacina:</label>
+
+            <select name="id_vacina" required>
+
+                {% for vacina in vacinas %}
+
+                    <option
+                        value="{{ vacina[0] }}"
+                        {% if vacina[0] == aplicacao[2] %}selected{% endif %}
+                    >
+                        {{ vacina[1] }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <label>Número da dose:</label>
+
+            <input
+                type="number"
+                name="numero_dose"
+                min="1"
+                value="{{ aplicacao[3] }}"
+                required
+            >
+
+            <label>Data da aplicação:</label>
+
+            <input
+                type="date"
+                name="data_aplicacao"
+                value="{{ aplicacao[4].strftime('%Y-%m-%d') }}"
+                required
+            >
+
+            <label>Lote da vacina:</label>
+
+            <input
+                type="text"
+                name="lote"
+                maxlength="50"
+                value="{{ aplicacao[5] }}"
+                required
+            >
+
+            <button type="submit">Salvar Alterações</button>
+
+        </form>
+
+        <br>
+
+        <a href="/aplicacoes">Voltar para a lista de aplicações</a>
+
+    </div>
+
+</body>
+
+</html>

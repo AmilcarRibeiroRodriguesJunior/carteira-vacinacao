@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Aplicações de Vacinas</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 40px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        h1, h2 {
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input, select {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        a {
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .mensagem {
+            background-color: #eafaf1;
+            color: #196f3d;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .excluir {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Aplicações de Vacinas</h1>
+
+        {% if mensagem %}
+            <p class="mensagem">{{ mensagem }}</p>
+        {% endif %}
+
+        <h2>Registrar aplicação</h2>
+
+        <form action="/aplicacoes/cadastrar" method="POST">
+
+            <label>Pessoa:</label>
+
+            <select name="id_pessoa" required>
+                <option value="">Selecione uma pessoa</option>
+
+                {% for pessoa in pessoas %}
+                    <option value="{{ pessoa[0] }}">
+                        {{ pessoa[1] }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+            <label>Vacina:</label>
+
+            <select name="id_vacina" required>
+                <option value="">Selecione uma vacina</option>
+
+                {% for vacina in vacinas %}
+                    <option value="{{ vacina[0] }}">
+                        {{ vacina[1] }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+            <label>Número da dose:</label>
+
+            <input
+                type="number"
+                name="numero_dose"
+                min="1"
+                required
+            >
+
+            <label>Data da aplicação:</label>
+
+            <input
+                type="date"
+                name="data_aplicacao"
+                required
+            >
+
+            <label>Lote da vacina:</label>
+
+            <input
+                type="text"
+                name="lote"
+                maxlength="50"
+                required
+            >
+
+            <br><br>
+
+            <button type="submit">Registrar aplicação</button>
+
+        </form>
+
+        <h2>Aplicações registradas</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pessoa</th>
+                    <th>Vacina</th>
+                    <th>Dose</th>
+                    <th>Data</th>
+                    <th>Lote</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for aplicacao in aplicacoes %}
+
+                    <tr>
+                        <td>{{ aplicacao[0] }}</td>
+                        <td>{{ aplicacao[1] }}</td>
+                        <td>{{ aplicacao[2] }}</td>
+                        <td>{{ aplicacao[3] }}</td>
+                        <td>{{ aplicacao[4].strftime('%d/%m/%Y') }}</td>
+                        <td>{{ aplicacao[5] }}</td>
+
+                        <td>
+                            <a href="/aplicacoes/editar/{{ aplicacao[0] }}">
+                                Editar
+                            </a>
+
+                            <form
+                                action="/aplicacoes/excluir/{{ aplicacao[0] }}"
+                                method="POST"
+                                onsubmit="return confirm('Deseja realmente excluir esta aplicação?');"
+                                style="display: inline;"
+                            >
+                                <button type="submit" class="excluir">
+                                    Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                {% else %}
+
+                    <tr>
+                        <td colspan="7">
+                            Nenhuma aplicação registrada.
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <a href="/">Voltar para a página inicial</a>
+
+    </div>
+
+</body>
+
+</html>

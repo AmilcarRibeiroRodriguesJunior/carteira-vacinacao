@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar pessoa</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #176b52;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input, button, a {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #176b52;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #176b52;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Editar pessoa</h1>
+
+        <form action="/pessoas/editar/{{ pessoa[0] }}" method="POST">
+
+            <label for="nome">Nome completo:</label>
+
+            <input
+                type="text"
+                id="nome"
+                name="nome"
+                value="{{ pessoa[1] }}"
+                maxlength="100"
+                required
+            >
+
+            <label for="data_nascimento">Data de nascimento:</label>
+
+            <input
+                type="date"
+                id="data_nascimento"
+                name="data_nascimento"
+                value="{{ pessoa[2].strftime('%Y-%m-%d') }}"
+                required
+            >
+
+            <button type="submit">Salvar alterações</button>
+
+        </form>
+
+        <a href="/">Voltar para a página inicial</a>
+
+    </div>
+</body>
+</html>
