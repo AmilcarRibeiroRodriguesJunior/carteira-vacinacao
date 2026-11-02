@@ -31,11 +31,12 @@ def testar_banco():
             "mensagem": "Conexão com PostgreSQL realizada com sucesso!"
         }
 
-    except Exception:
+    except Exception as erro:
+        app.logger.exception("Erro ao conectar ao banco Neon")
         return {
-            "status": "erro",
-            "mensagem": "Não foi possível conectar ao banco de dados."
-        }, 500
+        "status": "erro",
+        "mensagem": "Não foi possível conectar ao banco de dados."
+    }, 500
 
     finally:
         if conexao is not None:
