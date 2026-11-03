@@ -60,7 +60,7 @@ def formulario_edicao(id_vacina):
         )
 
     return render_template(
-        "editar_vacina.html",
+        "editar_vacinas.html",
         vacina=vacina
     )
 
